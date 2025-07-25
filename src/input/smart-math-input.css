@@ -1,0 +1,320 @@
+/* AI驱动智能数学输入系统样式 */
+
+/* 建议容器 */
+.smart-math-suggestion {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    margin: 2px 0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.smart-math-suggestion:hover {
+    background: var(--background-modifier-hover);
+    border-color: var(--interactive-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.smart-math-suggestion.is-selected {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-color: var(--interactive-accent);
+}
+
+/* 主要内容区域 */
+.suggestion-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.suggestion-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-normal);
+    line-height: 1.3;
+}
+
+.smart-math-suggestion.is-selected .suggestion-title {
+    color: var(--text-on-accent);
+}
+
+.suggestion-latex {
+    font-family: var(--font-monospace);
+    font-size: 12px;
+    background: var(--background-modifier-border);
+    padding: 4px 6px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    border: 1px solid var(--background-modifier-border-hover);
+}
+
+.smart-math-suggestion.is-selected .suggestion-latex {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-on-accent);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.suggestion-description {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.2;
+    font-style: italic;
+}
+
+.smart-math-suggestion.is-selected .suggestion-description {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 元数据区域 */
+.suggestion-metadata {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* 类型标签 */
+.suggestion-type {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.type-term {
+    background: var(--color-blue);
+    color: white;
+}
+
+.type-formula {
+    background: var(--color-green);
+    color: white;
+}
+
+.type-template {
+    background: var(--color-purple);
+    color: white;
+}
+
+/* 分类标签 */
+.suggestion-category {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--background-modifier-border-hover);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.smart-math-suggestion.is-selected .suggestion-category {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 置信度指示器 */
+.suggestion-confidence {
+    height: 3px;
+    background: var(--interactive-accent);
+    border-radius: 2px;
+    min-width: 20px;
+    max-width: 60px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.smart-math-suggestion:hover .suggestion-confidence {
+    opacity: 1;
+}
+
+/* AI增强标识 */
+.suggestion-ai-enhanced {
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: linear-gradient(45deg, var(--color-accent), var(--color-accent-2));
+    color: white;
+    font-weight: 600;
+    animation: ai-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes ai-glow {
+    0% {
+        box-shadow: 0 0 5px rgba(var(--color-accent-rgb), 0.5);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.8);
+    }
+}
+
+/* 激活通知 */
+.smart-math-input-notice {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--background-primary);
+    border: 1px solid var(--interactive-accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notice-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notice-icon {
+    font-size: 16px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.notice-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-normal);
+}
+
+/* 建议列表容器 */
+.suggestion-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 8px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 4px;
+}
+
+/* 滚动条样式 */
+.suggestion-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestion-container::-webkit-scrollbar-track {
+    background: var(--background-modifier-border);
+    border-radius: 3px;
+}
+
+.suggestion-container::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 3px;
+}
+
+.suggestion-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-normal);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .smart-math-suggestion {
+        padding: 6px 10px;
+    }
+    
+    .suggestion-title {
+        font-size: 13px;
+    }
+    
+    .suggestion-latex {
+        font-size: 11px;
+        padding: 3px 5px;
+    }
+    
+    .suggestion-description {
+        font-size: 11px;
+    }
+    
+    .suggestion-metadata {
+        gap: 6px;
+    }
+    
+    .smart-math-input-notice {
+        top: 10px;
+        right: 10px;
+        padding: 10px 14px;
+    }
+}
+
+/* 深色主题适配 */
+.theme-dark .smart-math-suggestion {
+    background: var(--background-primary-alt);
+}
+
+.theme-dark .smart-math-suggestion:hover {
+    background: var(--background-modifier-hover);
+}
+
+.theme-dark .suggestion-latex {
+    background: var(--background-modifier-border);
+    color: var(--text-muted);
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .smart-math-suggestion {
+        border-width: 2px;
+    }
+    
+    .suggestion-type,
+    .suggestion-ai-enhanced {
+        font-weight: 700;
+    }
+    
+    .suggestion-confidence {
+        height: 4px;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .smart-math-suggestion,
+    .suggestion-confidence,
+    .smart-math-input-notice {
+        transition: none;
+    }
+    
+    .ai-glow,
+    .pulse,
+    .slideInRight {
+        animation: none;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .smart-math-input-notice,
+    .suggestion-container {
+        display: none;
+    }
+}

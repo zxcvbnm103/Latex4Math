@@ -1,0 +1,930 @@
+/* 术语管理界面样式 */
+
+/* 主容器 */
+.math-term-management {
+    padding: 16px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* 头部区域 */
+.term-management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.term-management-title {
+    margin: 0;
+    color: var(--text-normal);
+}
+
+/* 统计信息 */
+.term-statistics {
+    margin-bottom: 20px;
+}
+
+.term-statistics h3 {
+    margin-bottom: 12px;
+    color: var(--text-normal);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-accent);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.category-stats {
+    grid-column: span 2;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.category-name {
+    color: var(--text-normal);
+}
+
+.category-count {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* 过滤区域 */
+.term-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--text-accent);
+}
+
+.category-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-select {
+    padding: 6px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+}
+
+.result-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+/* 术语列表 */
+.term-list-container {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.term-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.term-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.term-item:hover {
+    background: var(--background-secondary);
+    border-color: var(--text-accent);
+}
+
+.term-info {
+    flex: 1;
+    cursor: pointer;
+}
+
+.term-info.clickable:hover {
+    color: var(--text-accent);
+}
+
+.term-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.chinese-name {
+    font-weight: bold;
+    color: var(--text-normal);
+    font-size: 16px;
+}
+
+.english-name {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.term-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.term-category {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.latex-code {
+    font-family: var(--font-monospace);
+    background: var(--background-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.term-definition {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.4;
+    margin-top: 6px;
+}
+
+.term-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.term-actions button {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.term-actions button:hover {
+    background: var(--background-secondary);
+}
+
+.term-actions button.mod-cta {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+.term-actions button.mod-warning {
+    background: var(--text-error);
+    color: var(--text-on-accent);
+    border-color: var(--text-error);
+}
+
+/* 操作按钮区域 */
+.term-actions-container {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.term-actions-container button {
+    padding: 8px 16px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.term-actions-container button:hover {
+    background: var(--background-secondary);
+}
+
+.term-actions-container button.mod-cta {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+/* 术语编辑模态框 */
+.term-edit-modal {
+    min-width: 500px;
+    max-width: 700px;
+}
+
+.term-edit-modal .setting-item {
+    border: none;
+    padding: 12px 0;
+}
+
+.term-edit-modal .setting-item-name {
+    font-weight: bold;
+    color: var(--text-normal);
+}
+
+.term-edit-modal .setting-item-description {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.latex-preview-container {
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+}
+
+.latex-preview-container h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-normal);
+}
+
+.latex-preview {
+    padding: 12px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+}
+
+.modal-button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.modal-button-container button {
+    padding: 8px 16px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-button-container button:hover {
+    background: var(--background-secondary);
+}
+
+.modal-button-container button.mod-cta {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+.modal-button-container button.mod-warning {
+    background: var(--text-error);
+    color: var(--text-on-accent);
+    border-color: var(--text-error);
+}
+
+/* 术语详情模态框 */
+.term-detail-modal {
+    min-width: 600px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.term-basic-info {
+    margin-bottom: 24px;
+}
+
+.term-basic-info h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 8px;
+}
+
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.info-label {
+    min-width: 80px;
+    font-weight: bold;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.info-value {
+    color: var(--text-normal);
+}
+
+.info-value.chinese-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info-value.english-name {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.category-badge {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.aliases-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.alias-tag {
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.definition-section {
+    margin-top: 16px;
+}
+
+.definition-section h4 {
+    margin-bottom: 8px;
+    color: var(--text-normal);
+}
+
+.definition-content {
+    padding: 12px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    line-height: 1.5;
+    color: var(--text-normal);
+}
+
+.time-info {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--background-modifier-border);
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* LaTeX预览区域 */
+.latex-preview-section {
+    margin-bottom: 24px;
+}
+
+.latex-preview-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 8px;
+}
+
+.latex-code-container {
+    margin-bottom: 16px;
+}
+
+.latex-code-container h4 {
+    margin-bottom: 8px;
+    color: var(--text-normal);
+}
+
+.latex-code {
+    font-family: var(--font-monospace);
+    background: var(--background-secondary);
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    color: var(--text-normal);
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.copy-latex-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+}
+
+.copy-latex-btn:hover {
+    background: var(--background-secondary);
+}
+
+.latex-render-container h4 {
+    margin-bottom: 8px;
+    color: var(--text-normal);
+}
+
+.latex-render {
+    padding: 16px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.latex-render.render-error {
+    color: var(--text-error);
+    font-style: italic;
+}
+
+/* 关系网络区域 */
+.relationships-section {
+    margin-bottom: 24px;
+}
+
+.relationships-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 8px;
+}
+
+.no-relations {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+.relation-type-section {
+    margin-bottom: 20px;
+}
+
+.relation-type-section h4 {
+    margin-bottom: 12px;
+    color: var(--text-normal);
+    font-size: 14px;
+}
+
+.relations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.relation-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.relation-item:hover {
+    background: var(--background-primary);
+    border-color: var(--text-accent);
+}
+
+.relation-item.clickable:hover {
+    transform: translateX(2px);
+}
+
+.related-term-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.related-term-name {
+    font-weight: bold;
+    color: var(--text-normal);
+}
+
+.related-term-english {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 12px;
+}
+
+.related-term-category {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.relation-strength {
+    width: 60px;
+    height: 6px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-left: 12px;
+}
+
+.strength-fill {
+    height: 100%;
+    background: var(--text-accent);
+    transition: width 0.3s ease;
+}
+
+/* 详情操作按钮 */
+.term-detail-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.term-detail-actions button {
+    padding: 8px 16px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.term-detail-actions button:hover {
+    background: var(--background-secondary);
+}
+
+.term-detail-actions button.mod-cta {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+/* 导入模态框 */
+.term-import-modal {
+    min-width: 600px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.import-mode-section {
+    margin-bottom: 24px;
+}
+
+.import-mode-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+}
+
+.format-instructions {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+}
+
+.format-instructions h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-normal);
+}
+
+.format-instructions pre {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 12px;
+    overflow-x: auto;
+    font-family: var(--font-monospace);
+    font-size: 12px;
+    color: var(--text-normal);
+}
+
+.data-input-section {
+    margin-bottom: 24px;
+}
+
+.data-input-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+}
+
+.file-input-container {
+    margin-bottom: 16px;
+}
+
+.file-input-container label {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-input-container label:hover {
+    background: var(--background-primary);
+}
+
+.file-input-container input[type="file"] {
+    display: none;
+}
+
+.separator {
+    text-align: center;
+    color: var(--text-muted);
+    margin: 16px 0;
+    position: relative;
+}
+
+.separator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--background-modifier-border);
+    z-index: 1;
+}
+
+.separator {
+    background: var(--background-primary);
+    padding: 0 12px;
+    z-index: 2;
+    position: relative;
+}
+
+.preview-section {
+    margin-bottom: 24px;
+}
+
+.preview-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-normal);
+}
+
+.preview-container {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    padding: 16px;
+    background: var(--background-secondary);
+}
+
+.no-preview {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+.preview-stats {
+    margin-bottom: 16px;
+    font-weight: bold;
+    color: var(--text-accent);
+}
+
+.preview-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preview-term {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+}
+
+.preview-term .term-name {
+    font-weight: bold;
+    color: var(--text-normal);
+}
+
+.preview-term .term-english {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.preview-term .term-category {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.more-terms {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.import-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.import-actions button {
+    padding: 8px 16px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.import-actions button:hover:not(:disabled) {
+    background: var(--background-secondary);
+}
+
+.import-actions button.mod-cta {
+    background: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+.import-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .term-management-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-stats {
+        grid-column: span 1;
+    }
+    
+    .term-filters {
+        flex-direction: column;
+    }
+    
+    .term-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .term-actions {
+        align-self: flex-end;
+    }
+    
+    .term-actions-container {
+        flex-direction: column;
+    }
+    
+    .modal-button-container {
+        flex-direction: column;
+    }
+    
+    .term-detail-actions {
+        flex-direction: column;
+    }
+    
+    .import-actions {
+        flex-direction: column;
+    }
+}

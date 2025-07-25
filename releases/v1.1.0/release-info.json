@@ -1,0 +1,15 @@
+{
+  "version": "1.1.0",
+  "name": "数学记忆图谱",
+  "description": "🧠 AI驱动的智能数学输入系统，集成神经网络LaTeX转换、上下文感知分析和个性化学习引擎",
+  "author": "Math Memory Graph Team",
+  "minAppVersion": "0.15.0",
+  "buildTime": "2025-07-25T06:31:51.023Z",
+  "files": [
+    "CHANGELOG.md",
+    "main.js",
+    "manifest.json",
+    "README.md",
+    "styles.css"
+  ]
+}
