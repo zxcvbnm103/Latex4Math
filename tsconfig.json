@@ -9,7 +9,7 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "importHelpers": true,
-    "declaration": true,
+    "declaration": false,
     "outDir": "./lib",
     "downlevelIteration": true,
     "typeRoots": [
@@ -18,9 +18,18 @@
     "lib": [
       "DOM",
       "ES2018"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "include": [
-    "**/*.ts"
+    "src/**/*.ts",
+    "main.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "**/*.test.ts",
+    "test-*.js"
   ]
 }

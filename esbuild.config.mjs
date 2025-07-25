@@ -10,6 +10,7 @@ if you want to view the source, please visit the github repository of this plugi
 `;
 
 const prod = (process.argv[2] === 'production');
+const fast = process.argv.includes('--fast');
 
 const context = await esbuild.context({
 	banner: {
@@ -34,10 +35,24 @@ const context = await esbuild.context({
 		...builtins],
 	format: 'cjs',
 	target: 'es2018',
-	logLevel: "info",
-	sourcemap: prod ? false : 'inline',
-	treeShaking: true,
+	logLevel: prod ? "info" : (fast ? "error" : "warning"),
+	sourcemap: prod ? false : (fast ? false : true),
+	treeShaking: prod ? true : (fast ? false : true),
+	minify: prod,
 	outfile: 'main.js',
+	// 开发模式优化
+	...(prod ? {} : {
+		incremental: true,
+		metafile: false,
+		write: true,
+		splitting: false,
+		// 快速模式额外优化
+		...(fast ? {
+			keepNames: false,
+			legalComments: 'none',
+			ignoreAnnotations: true
+		} : {})
+	})
 });
 
 if (prod) {
