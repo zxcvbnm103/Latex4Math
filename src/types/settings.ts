@@ -11,6 +11,11 @@ export interface MathMemoryGraphSettings {
     recognitionSensitivity: number;
     customTermsPath: string;
     
+    // 术语文件管理
+    termFolderPath: string;
+    autoCreateTermFiles: boolean;
+    autoLinkTerms: boolean;
+    
     // 快捷键设置
     shortcutKeys: {
         toggleMathInput: string;
@@ -45,6 +50,11 @@ export const DEFAULT_SETTINGS: MathMemoryGraphSettings = {
     // 识别设置
     recognitionSensitivity: 0.7,
     customTermsPath: '',
+    
+    // 术语文件管理
+    termFolderPath: '图谱',
+    autoCreateTermFiles: true,
+    autoLinkTerms: true,
     
     // 快捷键设置
     shortcutKeys: {

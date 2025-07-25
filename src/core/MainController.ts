@@ -23,7 +23,7 @@ export class MainController implements IMainController {
         this.app = app;
         this.plugin = plugin;
         this.settings = settings;
-        this.termRecognitionEngine = new TermRecognitionEngine(app);
+        this.termRecognitionEngine = new TermRecognitionEngine(app, settings);
         
         // 初始化LaTeX相关组件
         this.neuralLatexConverter = new NeuralLatexConverter(app);
@@ -104,6 +104,8 @@ export class MainController implements IMainController {
      */
     public updateSettings(newSettings: MathMemoryGraphSettings): void {
         this.settings = newSettings;
+        // 更新术语识别引擎的设置
+        this.termRecognitionEngine.updateSettings(newSettings);
     }
 
     /**
@@ -216,6 +218,49 @@ export class MainController implements IMainController {
             console.error('MainController: 术语识别失败:', error);
             new Notice('术语识别失败，请检查控制台错误信息');
         }
+    }
+
+    /**
+     * 为当前笔记创建术语文件
+     */
+    public async createTermFilesForCurrentNote(): Promise<void> {
+        if (!this.isInitialized) {
+            console.warn('MainController: 插件未初始化');
+            return;
+        }
+
+        try {
+            await this.termRecognitionEngine.createTermFilesForCurrentNote();
+            new Notice('✅ 术语文件创建完成');
+        } catch (error) {
+            console.error('MainController: 创建术语文件失败:', error);
+            new Notice('创建术语文件失败，请检查控制台错误信息');
+        }
+    }
+
+    /**
+     * 更新当前笔记的术语链接
+     */
+    public async updateTermLinksInCurrentNote(): Promise<void> {
+        if (!this.isInitialized) {
+            console.warn('MainController: 插件未初始化');
+            return;
+        }
+
+        try {
+            await this.termRecognitionEngine.updateTermLinksInCurrentNote();
+            new Notice('✅ 术语链接更新完成');
+        } catch (error) {
+            console.error('MainController: 更新术语链接失败:', error);
+            new Notice('更新术语链接失败，请检查控制台错误信息');
+        }
+    }
+
+    /**
+     * 获取术语文件管理器
+     */
+    public getTermFileManager() {
+        return this.termRecognitionEngine.getTermFileManager();
     }
 
     /**

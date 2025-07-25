@@ -1,10 +1,11 @@
 import { App, TFile, CachedMetadata } from 'obsidian';
 import { ITermRecognitionEngine } from '../interfaces/core';
-import { MathTerm, RecognizedTerm, ValidationResult, MathCategory } from '../types';
+import { MathTerm, RecognizedTerm, ValidationResult, MathCategory, MathMemoryGraphSettings } from '../types';
 import { ChineseMathDictionary } from './ChineseMathDictionary';
 import { TextScanner } from './TextScanner';
 import { TermMarker } from './TermMarker';
 import { UsageTracker } from './UsageTracker';
+import { TermFileManager } from '../storage/TermFileManager';
 
 /**
  * 自适应术语识别引擎
@@ -12,18 +13,22 @@ import { UsageTracker } from './UsageTracker';
  */
 export class TermRecognitionEngine implements ITermRecognitionEngine {
     private app: App;
+    private settings: MathMemoryGraphSettings;
     private dictionary: ChineseMathDictionary;
     private textScanner: TextScanner;
     private termMarker: TermMarker;
     private usageTracker: UsageTracker;
+    private termFileManager: TermFileManager;
     private isInitialized: boolean = false;
 
-    constructor(app: App) {
+    constructor(app: App, settings: MathMemoryGraphSettings) {
         this.app = app;
+        this.settings = settings;
         this.dictionary = new ChineseMathDictionary();
         this.textScanner = new TextScanner(this.dictionary);
         this.termMarker = new TermMarker(app);
         this.usageTracker = new UsageTracker();
+        this.termFileManager = new TermFileManager(app, settings.termFolderPath);
     }
 
     /**
@@ -38,6 +43,9 @@ export class TermRecognitionEngine implements ITermRecognitionEngine {
             
             // 初始化使用频率跟踪器
             await this.usageTracker.initialize();
+            
+            // 初始化术语文件管理器
+            await this.termFileManager.initialize();
             
             // 注册Obsidian事件监听器
             this.registerEventHandlers();
@@ -220,6 +228,72 @@ export class TermRecognitionEngine implements ITermRecognitionEngine {
     }
 
     /**
+     * 更新设置
+     */
+    updateSettings(settings: MathMemoryGraphSettings): void {
+        this.settings = settings;
+        this.termFileManager.setTermFolderPath(settings.termFolderPath);
+    }
+
+    /**
+     * 获取术语文件管理器
+     */
+    getTermFileManager(): TermFileManager {
+        return this.termFileManager;
+    }
+
+    /**
+     * 手动创建术语文件
+     */
+    async createTermFilesForCurrentNote(): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        if (!activeFile) {
+            console.warn('TermRecognitionEngine: 没有活动文档');
+            return;
+        }
+
+        try {
+            const content = await this.app.vault.read(activeFile);
+            const recognizedTerms = await this.recognizeTerms(content);
+            
+            if (recognizedTerms.length > 0) {
+                const createdFiles = await this.termFileManager.createTermFilesFromRecognition(recognizedTerms, activeFile);
+                console.log(`TermRecognitionEngine: 为 ${activeFile.name} 创建了 ${createdFiles.length} 个术语文件`);
+                
+                // 如果启用了自动链接，也更新链接
+                if (this.settings.autoLinkTerms) {
+                    await this.termFileManager.updateTermLinksInFile(activeFile, recognizedTerms);
+                }
+            }
+        } catch (error) {
+            console.error('TermRecognitionEngine: 创建术语文件失败:', error);
+        }
+    }
+
+    /**
+     * 手动更新当前笔记的术语链接
+     */
+    async updateTermLinksInCurrentNote(): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        if (!activeFile) {
+            console.warn('TermRecognitionEngine: 没有活动文档');
+            return;
+        }
+
+        try {
+            const content = await this.app.vault.read(activeFile);
+            const recognizedTerms = await this.recognizeTerms(content);
+            
+            if (recognizedTerms.length > 0) {
+                await this.termFileManager.updateTermLinksInFile(activeFile, recognizedTerms);
+                console.log(`TermRecognitionEngine: 更新了 ${activeFile.name} 中的术语链接`);
+            }
+        } catch (error) {
+            console.error('TermRecognitionEngine: 更新术语链接失败:', error);
+        }
+    }
+
+    /**
      * 根据使用频率调整置信度
      */
     private adjustConfidenceByUsage(terms: RecognizedTerm[]): RecognizedTerm[] {
@@ -267,8 +341,15 @@ export class TermRecognitionEngine implements ITermRecognitionEngine {
             const recognizedTerms = await this.recognizeTerms(content);
             
             if (recognizedTerms.length > 0) {
-                // 可选：自动创建链接（根据设置决定）
-                // await this.createTermLinks(file, recognizedTerms);
+                // 自动创建术语文件（根据设置决定）
+                if (this.settings.autoCreateTermFiles) {
+                    await this.termFileManager.createTermFilesFromRecognition(recognizedTerms, file);
+                }
+                
+                // 自动创建术语链接（根据设置决定）
+                if (this.settings.autoLinkTerms) {
+                    await this.termFileManager.updateTermLinksInFile(file, recognizedTerms);
+                }
                 
                 // 触发术语识别事件
                 this.app.workspace.trigger('math-memory:terms-recognized', {

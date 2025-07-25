@@ -38,6 +38,9 @@ export class CommandManager {
         // 注册术语管理命令
         this.registerTermManagementCommands();
         
+        // 注册术语文件管理命令
+        this.registerTermFileCommands();
+        
         // 注册工具命令
         this.registerUtilityCommands();
 
@@ -240,6 +243,61 @@ export class CommandManager {
             icon: 'search',
             callback: () => {
                 this.searchTerms();
+            }
+        });
+    }
+
+    /**
+     * 注册术语文件管理命令
+     */
+    private registerTermFileCommands(): void {
+        // 为当前笔记创建术语文件
+        this.plugin.addCommand({
+            id: 'create-term-files',
+            name: '为当前笔记创建术语文件',
+            icon: 'file-plus',
+            callback: () => {
+                this.createTermFilesForCurrentNote();
+            }
+        });
+
+        // 更新当前笔记的术语链接
+        this.plugin.addCommand({
+            id: 'update-term-links',
+            name: '更新术语双链',
+            icon: 'link',
+            callback: () => {
+                this.updateTermLinksInCurrentNote();
+            }
+        });
+
+        // 设置术语文件夹路径
+        this.plugin.addCommand({
+            id: 'set-term-folder',
+            name: '设置术语文件夹',
+            icon: 'folder',
+            callback: () => {
+                this.setTermFolder();
+            }
+        });
+
+        // 批量创建所有术语文件
+        this.plugin.addCommand({
+            id: 'batch-create-term-files',
+            name: '批量创建术语文件',
+            icon: 'files',
+            callback: () => {
+                this.batchCreateTermFiles();
+            }
+        });
+
+        // 同步术语文件
+        this.plugin.addCommand({
+            id: 'sync-term-files',
+            name: '同步术语文件',
+            icon: 'refresh-cw',
+            callback: () => {
+                this.syncTermFiles();
             }
         });
     }
@@ -513,6 +571,228 @@ export class CommandManager {
                 // 延迟一下确保视图完全渲染
                 setTimeout(() => termManagementView.focusSearch(), 100);
             }
+        });
+    }
+
+    // ==================== 术语文件管理命令实现 ====================
+
+    private async createTermFilesForCurrentNote(): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        if (!activeFile) {
+            new Notice('请先打开一个笔记文件');
+            return;
+        }
+
+        try {
+            new Notice('正在为当前笔记创建术语文件...');
+            console.log('CommandManager: 创建术语文件，文件:', activeFile.path);
+            
+            // 获取主插件实例并调用术语文件创建
+            const mainPlugin = this.plugin as MathMemoryGraphPlugin;
+            const mainController = (mainPlugin as any).mainController;
+            
+            if (mainController && mainController.createTermFilesForCurrentNote) {
+                await mainController.createTermFilesForCurrentNote();
+            } else {
+                new Notice('术语文件管理器未初始化');
+            }
+        } catch (error) {
+            console.error('CommandManager: 创建术语文件失败:', error);
+            new Notice('创建术语文件失败，请检查控制台错误信息');
+        }
+    }
+
+    private async updateTermLinksInCurrentNote(): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        if (!activeFile) {
+            new Notice('请先打开一个笔记文件');
+            return;
+        }
+
+        try {
+            new Notice('正在更新术语双链...');
+            console.log('CommandManager: 更新术语链接，文件:', activeFile.path);
+            
+            // 获取主插件实例并调用术语链接更新
+            const mainPlugin = this.plugin as MathMemoryGraphPlugin;
+            const mainController = (mainPlugin as any).mainController;
+            
+            if (mainController && mainController.updateTermLinksInCurrentNote) {
+                await mainController.updateTermLinksInCurrentNote();
+            } else {
+                new Notice('术语文件管理器未初始化');
+            }
+        } catch (error) {
+            console.error('CommandManager: 更新术语链接失败:', error);
+            new Notice('更新术语链接失败，请检查控制台错误信息');
+        }
+    }
+
+    private async setTermFolder(): Promise<void> {
+        try {
+            // 创建一个简单的输入对话框
+            const currentPath = this.settings.termFolderPath || '图谱';
+            const newPath = await this.promptForFolderPath(currentPath);
+            
+            if (newPath && newPath !== currentPath) {
+                // 更新设置
+                this.settings.termFolderPath = newPath;
+                
+                // 获取主插件实例并更新设置
+                const mainPlugin = this.plugin as MathMemoryGraphPlugin;
+                const mainController = (mainPlugin as any).mainController;
+                
+                if (mainController && mainController.updateSettings) {
+                    mainController.updateSettings(this.settings);
+                    await (mainPlugin as any).saveSettings();
+                    new Notice(`术语文件夹已设置为: ${newPath}`);
+                } else {
+                    new Notice('无法更新设置');
+                }
+            }
+        } catch (error) {
+            console.error('CommandManager: 设置术语文件夹失败:', error);
+            new Notice('设置术语文件夹失败');
+        }
+    }
+
+    private async batchCreateTermFiles(): Promise<void> {
+        try {
+            new Notice('正在批量创建术语文件...');
+            console.log('CommandManager: 批量创建术语文件');
+            
+            // 获取所有markdown文件
+            const markdownFiles = this.app.vault.getMarkdownFiles();
+            let processedCount = 0;
+            let createdCount = 0;
+            
+            const mainPlugin = this.plugin as MathMemoryGraphPlugin;
+            const mainController = (mainPlugin as any).mainController;
+            
+            if (!mainController || !mainController.getTermRecognitionEngine) {
+                new Notice('术语识别引擎未初始化');
+                return;
+            }
+            
+            const termRecognitionEngine = mainController.getTermRecognitionEngine();
+            const termFileManager = termRecognitionEngine.getTermFileManager();
+            
+            for (const file of markdownFiles) {
+                try {
+                    // 跳过术语文件夹中的文件
+                    if (file.path.startsWith(this.settings.termFolderPath)) {
+                        continue;
+                    }
+                    
+                    const content = await this.app.vault.read(file);
+                    const recognizedTerms = await termRecognitionEngine.recognizeTerms(content);
+                    
+                    if (recognizedTerms.length > 0) {
+                        const createdFiles = await termFileManager.createTermFilesFromRecognition(recognizedTerms, file);
+                        createdCount += createdFiles.length;
+                    }
+                    
+                    processedCount++;
+                    
+                    // 每处理10个文件显示一次进度
+                    if (processedCount % 10 === 0) {
+                        new Notice(`已处理 ${processedCount}/${markdownFiles.length} 个文件...`);
+                    }
+                } catch (error) {
+                    console.error(`处理文件 ${file.path} 时出错:`, error);
+                }
+            }
+            
+            new Notice(`批量创建完成！处理了 ${processedCount} 个文件，创建了 ${createdCount} 个术语文件`);
+        } catch (error) {
+            console.error('CommandManager: 批量创建术语文件失败:', error);
+            new Notice('批量创建术语文件失败，请检查控制台错误信息');
+        }
+    }
+
+    private async syncTermFiles(): Promise<void> {
+        try {
+            new Notice('正在同步术语文件...');
+            console.log('CommandManager: 同步术语文件');
+            
+            const mainPlugin = this.plugin as MathMemoryGraphPlugin;
+            const mainController = (mainPlugin as any).mainController;
+            
+            if (!mainController || !mainController.getTermFileManager) {
+                new Notice('术语文件管理器未初始化');
+                return;
+            }
+            
+            const termFileManager = mainController.getTermFileManager();
+            
+            // 获取所有术语文件
+            const termFiles = await termFileManager.getTermFiles();
+            let syncedCount = 0;
+            
+            for (const file of termFiles) {
+                try {
+                    // 读取术语信息并重新保存（这会更新文件格式和内容）
+                    const term = await termFileManager.readTermFromFile(file);
+                    if (term) {
+                        await termFileManager.saveTermToFile(term);
+                        syncedCount++;
+                    }
+                } catch (error) {
+                    console.error(`同步术语文件 ${file.path} 时出错:`, error);
+                }
+            }
+            
+            new Notice(`同步完成！更新了 ${syncedCount} 个术语文件`);
+        } catch (error) {
+            console.error('CommandManager: 同步术语文件失败:', error);
+            new Notice('同步术语文件失败，请检查控制台错误信息');
+        }
+    }
+
+    /**
+     * 提示用户输入文件夹路径
+     */
+    private async promptForFolderPath(currentPath: string): Promise<string | null> {
+        return new Promise((resolve) => {
+            // 创建一个简单的模态对话框
+            const modal = new (require('obsidian').Modal)(this.app);
+            modal.titleEl.setText('设置术语文件夹路径');
+            
+            const inputEl = modal.contentEl.createEl('input', {
+                type: 'text',
+                value: currentPath,
+                placeholder: '输入术语文件夹路径，例如：图谱'
+            });
+            inputEl.style.width = '100%';
+            inputEl.style.marginBottom = '10px';
+            
+            const buttonContainer = modal.contentEl.createDiv();
+            buttonContainer.style.textAlign = 'right';
+            
+            const cancelButton = buttonContainer.createEl('button', { text: '取消' });
+            cancelButton.style.marginRight = '10px';
+            cancelButton.onclick = () => {
+                modal.close();
+                resolve(null);
+            };
+            
+            const confirmButton = buttonContainer.createEl('button', { text: '确定' });
+            confirmButton.onclick = () => {
+                const newPath = inputEl.value.trim();
+                modal.close();
+                resolve(newPath || currentPath);
+            };
+            
+            // 回车键确认
+            inputEl.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    confirmButton.click();
+                }
+            });
+            
+            modal.open();
+            inputEl.focus();
+            inputEl.select();
         });
     }
 }
