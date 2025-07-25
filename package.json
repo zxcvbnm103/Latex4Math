@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-math-memory-graph",
+  "name": "Latex4Math",
   "version": "1.1.0",
   "description": "🧠 AI驱动的智能数学输入系统，集成神经网络LaTeX转换、上下文感知分析和个性化学习引擎",
   "main": "main.js",
@@ -21,7 +21,7 @@
     "latex",
     "knowledge-graph"
   ],
-  "author": "Math Memory Graph Team",
+  "author": "zxcvbnm103",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.11.6",

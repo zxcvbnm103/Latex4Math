@@ -1,4 +1,4 @@
-# 数学记忆图谱 | Math Memory Graph
+# Latex4Math
 
 > 🧠 AI驱动的智能数学输入系统，集成神经网络LaTeX转换、上下文感知分析和个性化学习引擎的Obsidian插件。
 
@@ -7,7 +7,7 @@
 ![AI增强](https://img.shields.io/badge/AI-增强-orange)
 ![许可证](https://img.shields.io/badge/许可证-MIT-green)
 
-**数学记忆图谱**是一款专为数学学习者和研究者设计的Obsidian插件，它能够智能识别中文数学术语，自动构建个人化的数学知识网络，并提供LaTeX转换和术语管理功能，帮助用户更高效地组织和理解数学知识。
+**Latex4Math**是一款专为数学学习者和研究者设计的Obsidian插件，它能够智能识别中文数学术语，自动构建个人化的数学知识网络，并提供LaTeX转换和术语管理功能，帮助用户更高效地组织和理解数学知识。
 
 ## 功能特性
 
@@ -40,17 +40,17 @@
 1. 打开Obsidian设置
 2. 进入"第三方插件"
 3. 禁用"安全模式"
-4. 点击"浏览"，搜索"数学记忆图谱"
+4. 点击"浏览"，搜索"Latex4Math"
 5. 安装并启用插件
 
 ### 手动安装
 1. 下载最新版本的发布包
-2. 解压到Obsidian插件目录: `{vault}/.obsidian/plugins/obsidian-math-memory-graph/`
+2. 解压到Obsidian插件目录: `{vault}/.obsidian/plugins/Latex4Math/`
 3. 重启Obsidian并在设置中启用插件
 
 ### 开发环境设置
-1. 克隆仓库: `git clone https://github.com/yourusername/obsidian-math-memory-graph.git`
-2. 进入项目目录: `cd obsidian-math-memory-graph`
+1. 克隆仓库: `git clone https://github.com/zxcvbnm103/Latex4Math.git`
+2. 进入项目目录: `cd Latex4Math`
 3. 安装依赖: `npm install`
 4. 开发模式: `npm run dev`
 5. 构建发布版本: `npm run build`
@@ -58,7 +58,7 @@
 ### 调试模式
 1. 在插件设置中启用"调试模式"
 2. 打开开发者控制台 (`Ctrl+Shift+I`) 查看详细日志
-3. 使用命令面板执行 `数学记忆图谱: 重新加载插件` 快速重载插件
+3. 使用命令面板执行 `Latex4Math: 重新加载插件` 快速重载插件
 
 ## 使用指南
 
@@ -207,18 +207,18 @@
 
 ## 许可证
 
-MIT License © 2023 数学记忆图谱团队 - 详见 [LICENSE](LICENSE) 文件
+MIT License © 2025 zxcvbnm103 - 详见 [LICENSE](LICENSE) 文件
 
 ## 联系方式
 
-- 项目主页: [GitHub](https://github.com/yourusername/obsidian-math-memory-graph)
-- 问题反馈: [Issues](https://github.com/yourusername/obsidian-math-memory-graph/issues)
-- 功能建议: [Discussions](https://github.com/yourusername/obsidian-math-memory-graph/discussions)
+- 项目主页: [GitHub](https://github.com/zxcvbnm103/Latex4Math)
+- 问题反馈: [Issues](https://github.com/zxcvbnm103/Latex4Math/issues)
+- 功能建议: [Discussions](https://github.com/zxcvbnm103/Latex4Math/discussions)
 - 邮箱: your.email@example.com
 
 ## 更新日志
 
-### v1.1.0 (2024-01-XX) - AI驱动智能输入系统完整版
+### v1.1.0 (2025-01-XX) - AI驱动智能输入系统完整版
 
 #### 🚀 重大功能发布
 - **🧠 AI驱动智能输入辅助系统**: 全新的基于神经网络的实时数学公式自动补全系统
@@ -245,7 +245,7 @@ MIT License © 2023 数学记忆图谱团队 - 详见 [LICENSE](LICENSE) 文件
 - **错误处理**: 优雅降级机制，组件失败时不影响整体功能
 - **代码清理**: 移除冗余文件，优化项目结构
 
-### v1.0.0 (2024-01-XX) - 神经网络LaTeX转换器集成版本
+### v1.0.0 (2025-01-XX) - 神经网络LaTeX转换器集成版本
 
 #### 🧠 重大功能升级
 - **神经网络LaTeX转换器**: 用训练好的神经网络模型替换了简单映射表

@@ -12,26 +12,26 @@
 
 ### 1. 创建GitHub仓库 (如果还没有)
 ```bash
-# 在GitHub上创建新仓库: obsidian-math-memory-graph
+# 在GitHub上创建新仓库: Latex4Math
 # 然后推送代码
 git init
 git add .
-git commit -m "Initial commit - Math Memory Graph v1.1.0"
+git commit -m "Initial commit - Latex4Math v1.1.0"
 git branch -M main
 git remote add origin https://github.com/zxcvbnm103/Latex4Math.git
 git push -u origin main
 ```
 
 ### 2. 创建GitHub Release
-1. 访问: `https://github.com/yourusername/obsidian-math-memory-graph/releases`
+1. 访问: `https://github.com/zxcvbnm103/Latex4Math/releases`
 2. 点击 "Create a new release"
 3. 填写信息:
    - **Tag**: `1.1.0`
-   - **Title**: `v1.1.0 - AI驱动智能输入系统完整版`
+   - **Title**: `v1.1.0 - Latex4Math 中文数学LaTeX输入系统`
    - **Description**: 复制下面的内容
 
 ```markdown
-# v1.1.0 - AI驱动智能输入系统完整版
+# v1.1.0 - Latex4Math 中文数学LaTeX输入系统
 
 ## 🚀 重大功能发布
 - **🧠 AI驱动智能输入辅助系统**: 全新的基于神经网络的实时数学公式自动补全系统
@@ -47,7 +47,7 @@ git push -u origin main
 
 ## 📥 安装方法
 1. 下载 `main.js`, `manifest.json`, `styles.css`
-2. 放入 `{vault}/.obsidian/plugins/obsidian-math-memory-graph/`
+2. 放入 `{vault}/.obsidian/plugins/Latex4Math/`
 3. 重启Obsidian并启用插件
 
 ## 🎮 使用方法
@@ -70,16 +70,16 @@ git push -u origin main
 
 ```json
 {
-  "id": "obsidian-math-memory-graph",
-  "name": "数学记忆图谱",
-  "author": "Math Memory Graph Team",
-  "description": "🧠 AI驱动的智能数学输入系统，集成神经网络LaTeX转换、上下文感知分析和个性化学习引擎",
-  "repo": "yourusername/obsidian-math-memory-graph"
+  "id": "Latex4Math",
+  "name": "Latex4Math",
+  "author": "zxcvbnm103",
+  "description": "🧠 AI驱动的智能中文数学输入系统，集成神经网络LaTeX转换、上下文感知分析和个性化学习引擎",
+  "repo": "zxcvbnm103/Latex4Math"
 }
 ```
 
 4. **创建Pull Request**:
-   - 标题: `Add Math Memory Graph plugin`
+   - 标题: `Add Latex4Math plugin`
    - 描述: 使用[UPLOAD_GUIDE.md](UPLOAD_GUIDE.md)中的PR模板
 
 ## 🧪 发布前测试 (推荐)
@@ -87,7 +87,7 @@ git push -u origin main
 ### 手动安装测试
 1. 复制发布文件到测试vault:
    ```
-   test-vault/.obsidian/plugins/obsidian-math-memory-graph/
+   test-vault/.obsidian/plugins/Latex4Math/
    ├── main.js
    ├── manifest.json
    └── styles.css
@@ -121,7 +121,7 @@ git push -u origin main
 
 ## 🎉 恭喜！
 
-您的**数学记忆图谱**插件已经完全准备好发布了！这是一个功能丰富的AI驱动插件，包含：
+您的**Latex4Math**插件已经完全准备好发布了！这是一个功能丰富的AI驱动插件，包含：
 
 - 🧠 神经网络LaTeX转换
 - 📊 上下文感知分析
